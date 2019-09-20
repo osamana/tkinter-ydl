@@ -1,0 +1,118 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: messages\n"
+"POT-Creation-Date: 2016-06-16 11:20+PDT\n"
+"PO-Revision-Date: 2016-06-16 12:39-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 1.6.10\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de\n"
+
+#: tkinter_ydl.py:37
+msgid "OK"
+msgstr "OK"
+
+#: tkinter_ydl.py:61
+msgid "Navigation "
+msgstr "Navigation "
+
+#: tkinter_ydl.py:74
+msgid "List item"
+msgstr "Listenpunkt"
+
+#: tkinter_ydl.py:88
+msgid "Unset status "
+msgstr "Unset status "
+
+#: tkinter_ydl.py:108
+msgid "Tool "
+msgstr "Werkzeug "
+
+#: tkinter_ydl.py:118
+msgid "Toolbar button"
+msgstr "Schaltfläche in der Symbolleiste"
+
+#: tkinter_ydl.py:118
+msgid "pressed"
+msgstr "gepresstem"
+
+#: tkinter_ydl.py:127
+msgid "Template"
+msgstr "Vorlage"
+
+#: tkinter_ydl.py:155
+msgid "New"
+msgstr "Neu"
+
+#: tkinter_ydl.py:156
+msgid "Open"
+msgstr "Öffnen"
+
+#: tkinter_ydl.py:159
+msgid "Exit"
+msgstr "Ausgang"
+
+#: tkinter_ydl.py:163 tkinter_ydl.py:170
+msgid "Help"
+msgstr "Hilfe"
+
+#: tkinter_ydl.py:165 tkinter_ydl.py:195
+msgid "About"
+msgstr "Von"
+
+#: tkinter_ydl.py:169
+msgid "File"
+msgstr "Feile"
+
+#: tkinter_ydl.py:180
+msgid "Help not yet created."
+msgstr "Hilfe noch nicht erstellt."
+
+#: tkinter_ydl.py:188
+msgid "No description available"
+msgstr "Keine Beschreibung verfügbar"
+
+#: tkinter_ydl.py:190
+msgid "Author"
+msgstr "Autor"
+
+#: tkinter_ydl.py:191
+msgid "Email"
+msgstr "Email"
+
+#: tkinter_ydl.py:192
+msgid "Version"
+msgstr "Version"
+
+#: tkinter_ydl.py:193
+msgid "GitHub Package"
+msgstr "GitHub -Paket"
+
+#: tkinter_ydl.py:201
+msgid "New button pressed"
+msgstr "Neu taste gedrückt"
+
+#: tkinter_ydl.py:201
+msgid "Not yet implemented"
+msgstr "Noch nicht implementiert"
+
+#: tkinter_ydl.py:208
+msgid "File selected for open: "
+msgstr "Datei für Open ausgewählt:"
+
+#: tkinter_ydl.py:210
+msgid "No file selected"
+msgstr "Keine Datei ausgewählt"
+
+#: tkinter_ydl.py:252
+msgid "Uptime"
+msgstr "Betriebszeit"

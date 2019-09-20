@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2016-06-16 11:20+PDT\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: tkinter_ydl.py:37
+msgid "OK"
+msgstr ""
+
+#: tkinter_ydl.py:61
+msgid "Navigation "
+msgstr ""
+
+#: tkinter_ydl.py:74
+msgid "List item"
+msgstr ""
+
+#: tkinter_ydl.py:88
+msgid "Unset status "
+msgstr ""
+
+#: tkinter_ydl.py:108
+msgid "Tool "
+msgstr ""
+
+#: tkinter_ydl.py:118
+msgid "Toolbar button"
+msgstr ""
+
+#: tkinter_ydl.py:118
+msgid "pressed"
+msgstr ""
+
+#: tkinter_ydl.py:127
+msgid "Template"
+msgstr ""
+
+#: tkinter_ydl.py:155
+msgid "New"
+msgstr ""
+
+#: tkinter_ydl.py:156
+msgid "Open"
+msgstr ""
+
+#: tkinter_ydl.py:159
+msgid "Exit"
+msgstr ""
+
+#: tkinter_ydl.py:163 tkinter_ydl.py:170
+msgid "Help"
+msgstr ""
+
+#: tkinter_ydl.py:165 tkinter_ydl.py:195
+msgid "About"
+msgstr ""
+
+#: tkinter_ydl.py:169
+msgid "File"
+msgstr ""
+
+#: tkinter_ydl.py:180
+msgid "Help not yet created."
+msgstr ""
+
+#: tkinter_ydl.py:188
+msgid "No description available"
+msgstr ""
+
+#: tkinter_ydl.py:190
+msgid "Author"
+msgstr ""
+
+#: tkinter_ydl.py:191
+msgid "Email"
+msgstr ""
+
+#: tkinter_ydl.py:192
+msgid "Version"
+msgstr ""
+
+#: tkinter_ydl.py:193
+msgid "GitHub Package"
+msgstr ""
+
+#: tkinter_ydl.py:201
+msgid "New button pressed"
+msgstr ""
+
+#: tkinter_ydl.py:201
+msgid "Not yet implemented"
+msgstr ""
+
+#: tkinter_ydl.py:208
+msgid "File selected for open: "
+msgstr ""
+
+#: tkinter_ydl.py:210
+msgid "No file selected"
+msgstr ""
+
+#: tkinter_ydl.py:252
+msgid "Uptime"
+msgstr ""
+
