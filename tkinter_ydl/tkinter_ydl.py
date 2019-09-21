@@ -57,6 +57,12 @@ class MainFrame(ttk.Frame):
         self.locationLabel = ttk.Label(parent, textvariable=self.locStringVar, )
         self.locationLabel.pack(side='top', anchor='w', fill='x', **paddings)
 
+        self.mp3_check_value = StringVar()
+        self.mp3_checkbox = ttk.Checkbutton(parent, text='Convert to MP3')
+        self.mp3_checkbox.config(variable=self.mp3_check_value, onvalue='yes', offvalue='no')
+        self.mp3_check_value.set('yes')
+        self.mp3_checkbox.pack(side='top', anchor='w', **paddings)
+
         self.progressIntVar = IntVar()
         self.progressIntVar.set(0)
         self.mpb = ttk.Progressbar(parent, orient="horizontal", length=200, mode="determinate")
@@ -72,11 +78,21 @@ class MainFrame(ttk.Frame):
         ydl_opts = {
             'nocheckcertificate': True,
             'ignoreerrors': True,
-            'noplaylists': True,
+            'noplaylists': False,
             'progress_hooks': [self.progress_hook],
             'quiet': True,
             'outtmpl': self.download_location + '/%(title)s.%(ext)s',
         }
+
+        if self.mp3_check_value.get() == 'yes':
+            ydl_opts.update({
+                'format': 'bestaudio/best',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                }],
+            })
 
         # todo: do validations on this
         target = self.entry.get()
