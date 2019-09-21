@@ -9,196 +9,101 @@ import datetime
 import gettext
 import sys
 import time
+import os
 import tkinter
 import tkinter.ttk as ttk
 from tkinter.filedialog import askopenfilename
+from tkinter import *
+import youtube_dl
+from tkinter import filedialog
 
 # All translations provided for illustrative purposes only.
- # english
+# english
 _ = lambda s: s
-
-
-
-class PopupDialog(ttk.Frame):
-    "Sample popup dialog implemented to provide feedback."
-
-    def __init__(self, parent, title, body):
-        ttk.Frame.__init__(self, parent)
-        self.top = tkinter.Toplevel(parent)
-        _label = ttk.Label(self.top, text=body, justify=tkinter.LEFT)
-        _label.pack(padx=10, pady=10)
-        _button = ttk.Button(self.top, text=_("OK"), command=self.ok_button)
-        _button.pack(pady=5)
-        self.top.title(title)
-
-    def ok_button(self):
-        "OK button feedback."
-
-        self.top.destroy()
-
-
-
-class NavigationBar(ttk.Frame):
-    "Sample navigation pane provided by cookiecutter switch."
-
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
-        self.config(border=1, relief=tkinter.GROOVE)
-
-        self.scrollbar = ttk.Scrollbar(self, orient=tkinter.VERTICAL)
-        self.scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y, expand=1)
-
-        self.listbox = tkinter.Listbox(self, bg='white')
-        self.listbox.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=1)
-        for i in range(1, 100):
-            self.listbox.insert(tkinter.END, _('Navigation ') + str(i))
-        self.listbox.config(yscrollcommand=self.scrollbar.set)
-        self.scrollbar.config(command=self.listbox.yview)
-        self.bind_all('<<ListboxSelect>>', self.onselect)
-        self.pack()
-
-    def onselect(self, event):
-        """Sample function provided to show how navigation commands may be \
-        received."""
-
-        widget = event.widget
-        _index = int(widget.curselection()[0])
-        _value = widget.get(_index)
-        print(_('List item'), ' %d / %s' % (_index, _value))
-
-
-
-
-class StatusBar(ttk.Frame):
-    "Sample status bar provided by cookiecutter switch."
-    _status_bars = 4
-
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
-        self.labels = []
-        self.config(border=1, relief=tkinter.GROOVE)
-        for i in range(self._status_bars):
-            _label_text = _('Unset status ') + str(i + 1)
-            self.labels.append(ttk.Label(self, text=_label_text))
-            self.labels[i].config(relief=tkinter.GROOVE)
-            self.labels[i].pack(side=tkinter.LEFT, fill=tkinter.X)
-        self.pack()
-
-    def set_text(self, status_index, new_text):
-        self.labels[status_index].config(text=new_text)
-
-
-
-
-class ToolBar(ttk.Frame):
-    "Sample toolbar provided by cookiecutter switch."
-
-    def __init__(self, parent):
-        ttk.Frame.__init__(self, parent)
-        self.buttons = []
-        self.config(border=1, relief=tkinter.GROOVE)
-        for i in range(1, 5):
-            _button_text = _('Tool ') + str(i)
-            self.buttons.append(ttk.Button(self, text=_button_text,
-                                           command=lambda i=i:
-                                           self.run_tool(i)))
-            self.buttons[i - 1].pack(side=tkinter.LEFT, fill=tkinter.X)
-        self.pack()
-
-    def run_tool(self, number):
-        "Sample function provided to show how a toolbar command may be used."
-
-        print(_('Toolbar button'), number, _('pressed'))
-
 
 
 class MainFrame(ttk.Frame):
     "Main area of user interface content."
 
-    past_time = datetime.datetime.now()
-    _advertisement = 'Cookiecutter: Open-Source Project Templates'
-    _product = _('Template') + ': Tkinter YDL'
-    _boilerplate = _advertisement + '\n\n' + _product + '\n\n'
-
     def __init__(self, parent):
         ttk.Frame.__init__(self, parent)
-        self.display = ttk.Label(parent, anchor=tkinter.CENTER,
-                                 foreground='green', background='black')
-        self.display.pack(fill=tkinter.BOTH, expand=1)
-        self.tick()
+        self.parent = parent
+        paddings = {'padx': 6, 'pady': 6}
+        self.download_location = '/'.join(os.getcwd().split('/')[:3]) + '/Downloads'
+        ttk.Label(parent, text="Youtube Url").pack(side='top', anchor='w', **paddings)
+        self.entry = ttk.Entry(parent, )
+        self.entry.pack(side='top', fill='x', **paddings)
 
-    def tick(self):
-        "Invoked automatically to update a clock displayed in the GUI."
+        # todo delete this line
+        self.entry.insert(0, 'https://www.youtube.com/watch?v=nXait2wHOQc')
 
-        this_time = datetime.datetime.now()
-        if this_time != self.past_time:
-            self.past_time = this_time
-            _timestamp = this_time.strftime('%Y-%m-%d %H:%M:%S')
-            self.display.config(text=self._boilerplate + _timestamp)
-        self.display.after(100, self.tick)
+        self.button = ttk.Button(parent, text="Download", command=self.do_download)
+        self.button.pack(side='top', **paddings, anchor='w')
 
+        # style = ttk.Style()
+        # style.configure('TButton', foreground="red")
+        # self.button.config(style='Alarm.TButton')
 
-class MenuBar(tkinter.Menu):
-    "Menu bar appearing with expected components."
+        self.location_button = ttk.Button(parent, text="Location", command=self.browse_button)
+        self.location_button.pack(side='top', **paddings, anchor='w')
 
-    def __init__(self, parent):
-        tkinter.Menu.__init__(self, parent)
+        self.statusStringVar = StringVar()
+        self.statusStringVar.set('status here')
+        self.status = ttk.Label(parent, textvariable=self.statusStringVar, text='status', )
+        self.status.pack(side='top', anchor='w', fill='x', **paddings)
 
-        filemenu = tkinter.Menu(self, tearoff=False)
-        filemenu.add_command(label=_('New'), command=self.new_dialog)
-        filemenu.add_command(label=_('Open'), command=self.open_dialog)
-        filemenu.add_separator()
-        filemenu.add_command(label=_('Exit'), underline=1,
-                             command=self.quit)
+        self.locStringVar = StringVar()
+        self.locStringVar.set(f"Location: {self.download_location}")
+        self.locationLabel = ttk.Label(parent, textvariable=self.locStringVar, )
+        self.locationLabel.pack(side='top', anchor='w', fill='x', **paddings)
 
-        helpmenu = tkinter.Menu(self, tearoff=False)
-        helpmenu.add_command(label=_('Help'), command=lambda:
-                             self.help_dialog(None), accelerator="F1")
-        helpmenu.add_command(label=_('About'), command=self.about_dialog)
-        self.bind_all('<F1>', self.help_dialog)
+        self.progressIntVar = IntVar()
+        self.progressIntVar.set(0)
+        self.mpb = ttk.Progressbar(parent, orient="horizontal", length=200, mode="determinate")
+        self.mpb['variable'] = self.progressIntVar
+        self.mpb.pack(side='top', anchor='w', fill='x', **paddings)
+        self.mpb["maximum"] = 100
+        # self.mpb["value"] = 0
 
-        self.add_cascade(label=_('File'), underline=0, menu=filemenu)
-        self.add_cascade(label=_('Help'), underline=0, menu=helpmenu)
+    def do_download(self):
+        print('started')
+        # download_location = '~/'
 
-    def quit(self):
-        "Ends toplevel execution."
+        ydl_opts = {
+            'nocheckcertificate': True,
+            'ignoreerrors': True,
+            'noplaylists': True,
+            'progress_hooks': [self.progress_hook],
+            'quiet': True,
+            'outtmpl': self.download_location + '/%(title)s.%(ext)s',
+        }
 
-        sys.exit(0)
+        # todo: do validations on this
+        target = self.entry.get()
 
-    def help_dialog(self, event):
-        "Dialog cataloging results achievable, and provided means available."
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            # ydl.add_progress_hook()
+            ydl.download([target, ])
 
-        _description = _('Help not yet created.')
-        PopupDialog(self, 'Tkinter YDL', _description)
+    def progress_hook(self, d):
+        if d['status'] == 'finished':
+            file_tuple = os.path.split(os.path.abspath(d['filename']))
+            print("Done downloading {}".format(file_tuple[1]))
+        if d['status'] == 'downloading':
+            # print(d['filename'], d['_percent_str'], d['_eta_str'])
+            # print('***', d['_percent_str'])
+            # self.status.config(text=d['_percent_str'])
+            self.statusStringVar.set(d['_percent_str'])
+            progress_int = int(float((d['_percent_str']).split('%')[0].strip()))
+            self.progressIntVar.set(progress_int)
+            self.parent.update_idletasks()
+            # self.mpb["value"] = int(float((d['_percent_str']).split('%')[0].strip()))
 
-    def about_dialog(self):
-        "Dialog concerning information about entities responsible for program."
-
-        _description = 'A simple youtube downloader and converter built with python tkinter'
-        if _description == '':
-            _description = _('No description available')
-        _description += '\n'
-        _description += '\n' + _('Author') + ': Osama Abuomar'
-        _description += '\n' + _('Email') + ': osama@najah.edu'
-        _description += '\n' + _('Version') + ': 0.0.1'
-        _description += '\n' + _('GitHub Package') + \
-                        ': tkinter_ydl'
-        PopupDialog(self, _('About') + ' Tkinter YDL',
-                    _description)
-
-    def new_dialog(self):
-        "Non-functional dialog indicating successful navigation."
-
-        PopupDialog(self, _('New button pressed'), _('Not yet implemented'))
-
-    def open_dialog(self):
-        "Standard askopenfilename() invocation and result handling."
-
-        _name = tkinter.filedialog.askopenfilename()
-        if isinstance(_name, str):
-            print(_('File selected for open: ') + _name)
-        else:
-            print(_('No file selected'))
+    def browse_button(self):
+        filename = filedialog.askdirectory()
+        print(filename)
+        self.download_location = filename
+        self.locStringVar.set(f"Location: {self.download_location}")
 
 
 class Application(tkinter.Tk):
@@ -206,42 +111,12 @@ class Application(tkinter.Tk):
 
     def __init__(self):
         tkinter.Tk.__init__(self)
-        menubar = MenuBar(self)
-        self.config(menu=menubar)
+
         self.wm_title('Tkinter YDL')
         self.wm_geometry('640x480')
 
-# Status bar selection == 'y'
-        self.statusbar = StatusBar(self)
-        self.statusbar.pack(side='bottom', fill='x')
-        self.bind_all('<Enter>', lambda e: self.statusbar.set_text(0,
-                      'Mouse: 1'))
-        self.bind_all('<Leave>', lambda e: self.statusbar.set_text(0,
-                      'Mouse: 0'))
-        self.bind_all('<Button-1>', lambda e: self.statusbar.set_text(1,
-                      'Clicked at x = ' + str(e.x) + ' y = ' + str(e.y)))
-        self.start_time = datetime.datetime.now()
-        self.uptime()
-
-
-# Navigation selection == 'y'
-        self.navigationbar = NavigationBar(self)
-        self.navigationbar.pack(side='left', fill='y')
-
-
-# Tool bar selection == 'y'
-        self.toolbar = ToolBar(self)
-        self.toolbar.pack(side='top', fill='x')
-
-
         self.mainframe = MainFrame(self)
         self.mainframe.pack(side='right', fill='y')
-
-# Status bar selection == 'y'
-    def uptime(self):
-        _upseconds = str(int(round((datetime.datetime.now() - self.start_time).total_seconds())))
-        self.statusbar.set_text(2, _('Uptime') + ': ' + _upseconds)
-        self.after(1000, self.uptime)
 
 
 if __name__ == '__main__':
